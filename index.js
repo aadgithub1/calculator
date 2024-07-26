@@ -1,6 +1,19 @@
 const btns = document.querySelectorAll('button')
-btns.forEach((btn) => btn.addEventListener('click', () => alert('clicked')))
-
+const display = document.querySelector('h1')
+const operatorSymbols = '+-*/'
+let currentExpression = []
+//more pseudo
+btns.forEach((btn) => btn.addEventListener('click', function(click){
+    if (Number.isInteger(+click.target.textContent)){
+        return display.textContent += click.target.textContent
+    } else if (operatorSymbols.includes(click.target.textContent)){//operator
+        addToCurrentExpression(+display.textContent, click.target.textContent)//current num in display and the operator being used
+        console.log(currentExpression);
+    }
+}))
+function addToCurrentExpression(...numOrSymbol){
+    currentExpression.push(numOrSymbol)
+}
 function add(...operands){
     return operands.reduce((sum, number) => (sum + number))
 }
@@ -12,4 +25,7 @@ function multiply(...operands){
 }
 function divide(...operands){
     return operands.reduce((firstNum, secondNum) => (firstNum / secondNum))
+}
+function square(number){
+    return Math.pow(number, 2)
 }
