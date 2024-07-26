@@ -1,1 +1,3 @@
 # calculator
+
+Models a calculator.
