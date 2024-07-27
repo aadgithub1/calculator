@@ -26,7 +26,7 @@ body{
     flex-direction: column;
 }
 #display-div{
-    background-color: var(--linen);
+    background-color: var(--color2);
     color: var(--base-color);
     height: 100px;
     font-size: 40px;
@@ -36,6 +36,7 @@ body{
     justify-content: flex-end;
     align-items: center;
 }
+
 #btn-div{
     background-color: var(--base-color);
     flex: 1;

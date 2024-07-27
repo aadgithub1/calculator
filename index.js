@@ -1,18 +1,38 @@
 const btns = document.querySelectorAll('button')
 const display = document.querySelector('h1')
-const operatorSymbols = '+-*/'
-let currentExpression = []
+let firstOperand, secondOperand, currentOperator 
 //more pseudo
-btns.forEach((btn) => btn.addEventListener('click', function(click){
-    if (Number.isInteger(+click.target.textContent)){
-        return display.textContent += click.target.textContent
-    } else if (operatorSymbols.includes(click.target.textContent)){//operator
-        addToCurrentExpression(+display.textContent, click.target.textContent)//current num in display and the operator being used
-        console.log(currentExpression);
+btns.forEach((btn) => btn.addEventListener('click', function(){
+    if (this.classList.contains('operand')){
+        display.textContent += this.textContent
+    } else if (this.classList.contains('operator')){
+        if (!firstOperand){
+            firstOperand = +display.textContent
+            this.style.opacity = '.7'
+            display.textContent = ''
+        } else if (!secondOperand){
+            secondOperand = +display.textContent
+            evaluate()
+        }
+        currentOperator = this.textContent
     }
 }))
-function addToCurrentExpression(...numOrSymbol){
-    currentExpression.push(numOrSymbol)
+function evaluate(){
+    btns.forEach((btn) => btn.style.opacity = '1')
+    switch(currentOperator){
+        case '+':
+            display.textContent = add(firstOperand, secondOperand)
+            break
+        case '-':
+            display.textContent = subtract(firstOperand, secondOperand)
+            break
+        case '*':
+            display.textContent = multiply(firstOperand, secondOperand)
+            break
+        case '/':
+            display.textContent = divide(firstOperand, secondOperand)
+            break
+    }
 }
 function add(...operands){
     return operands.reduce((sum, number) => (sum + number))
