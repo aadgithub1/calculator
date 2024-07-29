@@ -1,18 +1,23 @@
 const btns = document.querySelectorAll('button')
 const display = document.querySelector('h1')
-let firstOperand, secondOperand, currentOperator 
-//more pseudo
+let firstOperand, secondOperand, currentOperator
+
 btns.forEach((btn) => btn.addEventListener('click', function(){
     if (this.classList.contains('operand')){
         display.textContent += this.textContent
     } else if (this.classList.contains('operator')){
         if (!firstOperand){
+            if (this.textContent == '+/-'){
+                return makeNegative()
+             }
             firstOperand = +display.textContent
             this.style.opacity = '.7'
             display.textContent = ''
         } else if (!secondOperand){
             secondOperand = +display.textContent
             evaluate()
+            resetState()
+            //if we are using a result as an operand (if there is an operator and nothing else) first operand is display, reset display
         }
         currentOperator = this.textContent
         if (this.textContent == 'x2'){
@@ -23,6 +28,11 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
         resetState()
     }
 }))
+//the problem:
+
+//set the result as the first operand
+
+//AND us the key that was just pressed (the new operator) as the current operator to be used with the new first operand (result of last calculation)
 function resetState(){
     firstOperand = ''
     secondOperand = ''
@@ -37,23 +47,27 @@ function evaluate(){
     switch(currentOperator){
         case '+':
             display.textContent = add(firstOperand, secondOperand)
-            resetState()
             break
         case '-':
             display.textContent = subtract(firstOperand, secondOperand)
-            resetState()
             break
         case '*':
             display.textContent = multiply(firstOperand, secondOperand)
-            resetState()
             break
         case '/':
             display.textContent = divide(firstOperand, secondOperand)
-            resetState()
             break
         case 'x2':
             display.textContent = square(firstOperand)
-            resetState()
+            break
+    }
+}
+function makeNegative(){
+    resetBtnOpacity()
+    if (display.textContent[0] == '-'){
+        display.textContent = display.textContent.slice(1)
+    }else {
+        display.textContent = `-${display.textContent}`
     }
 }
 function add(...operands){
