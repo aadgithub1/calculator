@@ -15,23 +15,45 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
             evaluate()
         }
         currentOperator = this.textContent
+        if (this.textContent == 'x2'){
+            evaluate()
+        }
+    } else if (this.textContent == 'AC'){
+        display.textContent = ''
+        resetState()
     }
 }))
-function evaluate(){
+function resetState(){
+    firstOperand = ''
+    secondOperand = ''
+    currentOperator = ''
+    resetBtnOpacity()
+}
+function resetBtnOpacity(){
     btns.forEach((btn) => btn.style.opacity = '1')
+}
+function evaluate(){
+    resetBtnOpacity()
     switch(currentOperator){
         case '+':
             display.textContent = add(firstOperand, secondOperand)
+            resetState()
             break
         case '-':
             display.textContent = subtract(firstOperand, secondOperand)
+            resetState()
             break
         case '*':
             display.textContent = multiply(firstOperand, secondOperand)
+            resetState()
             break
         case '/':
             display.textContent = divide(firstOperand, secondOperand)
+            resetState()
             break
+        case 'x2':
+            display.textContent = square(firstOperand)
+            resetState()
     }
 }
 function add(...operands){
