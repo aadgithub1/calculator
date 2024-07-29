@@ -10,21 +10,21 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
             return makeNegative()
          } else if (!firstOperand){
             firstOperand = +display.textContent
-            this.style.opacity = '.7'
-            display.textContent = ''
+            this.style.opacity = '.7' //'hold button down'
+            display.textContent = '' //allow user to type next operand
         } else if (!secondOperand){
             secondOperand = +display.textContent
             if (this.textContent == '='){
             evaluate()
             resetState()
-            } else{
+            } else{ //user wants to use result as an operand, do not reset
                 evaluate()
                 firstOperand = +display.textContent
                 this.style.opacity = '.7'
                 secondOperand = ''
                 display.textContent = ''
             }
-        } else{
+        } else{ //if we have both operands
             evaluate()
             resetState()
         }
