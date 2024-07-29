@@ -15,9 +15,19 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
             display.textContent = ''
         } else if (!secondOperand){
             secondOperand = +display.textContent
+            if (this.textContent == '='){
             evaluate()
             resetState()
-            //if we are using a result as an operand (if there is an operator and nothing else) first operand is display, reset display
+            } else{
+                evaluate()
+                firstOperand = +display.textContent
+                this.style.opacity = '.7'
+                secondOperand = ''
+                display.textContent = ''
+            }
+        } else{
+            evaluate()
+            resetState()
         }
         currentOperator = this.textContent
         if (this.textContent == 'x2'){
@@ -28,11 +38,6 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
         resetState()
     }
 }))
-//the problem:
-
-//set the result as the first operand
-
-//AND us the key that was just pressed (the new operator) as the current operator to be used with the new first operand (result of last calculation)
 function resetState(){
     firstOperand = ''
     secondOperand = ''
@@ -80,7 +85,7 @@ function multiply(...operands){
     return operands.reduce((product, number) => (product * number))
 }
 function divide(...operands){
-    return operands.reduce((firstNum, secondNum) => (firstNum / secondNum))
+    return operands.reduce((firstNum, secondNum) => (firstNum / secondNum)).toFixed
 }
 function square(number){
     return Math.pow(number, 2)
