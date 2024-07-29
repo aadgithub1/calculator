@@ -1,7 +1,10 @@
 const btns = document.querySelectorAll('button')
 const display = document.querySelector('h1')
 let firstOperand, secondOperand, currentOperator
-
+//to do
+//fix multiple decimal
+//get intermediate return value to display when being used as first operand in new calculation
+//extra cred
 btns.forEach((btn) => btn.addEventListener('click', function(){
     if (this.classList.contains('operand')){
         display.textContent += this.textContent
@@ -84,6 +87,9 @@ function multiply(firstNum, secondNum){
     return firstNum * secondNum
 }
 function divide(firstNum, secondNum){
+    if (secondNum === 0){
+        return 'Mhm sure'
+    }
     return (firstNum / secondNum).toFixed(2)
 }
 function square(number){
