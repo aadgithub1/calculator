@@ -1,6 +1,7 @@
 :root{
     --base-color: #240B36;
     --color2: #A06CD5;
+    --operator-color: #D5573B;
     --linen: #F9EBE0;
 }
 *{
@@ -71,4 +72,7 @@ button{
 }
 .flex2{
     flex: 2;
+}
+.operator{
+    background-color: var(--operator-color);
 }

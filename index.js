@@ -1,81 +1,18 @@
 const btns = document.querySelectorAll('button')
 const display = document.querySelector('h1')
-let firstOperand, secondOperand, currentOperator
-//to do
-//fix multiple decimal
-//get intermediate return value to display when being used as first operand in new calculation
-//extra cred
+let firstOperand, secondOperand, operator
+
 btns.forEach((btn) => btn.addEventListener('click', function(){
-    if (this.classList.contains('operand')){
-        display.textContent += this.textContent
-    } else if (this.classList.contains('operator')){
-        if (this.textContent == '+/-'){
-            return makeNegative()
-         } else if (!firstOperand){
-            firstOperand = +display.textContent
-            this.style.opacity = '.7' //'hold button down'
-            display.textContent = '' //allow user to type next operand
-        } else if (!secondOperand){
-            secondOperand = +display.textContent
-            if (this.textContent == '='){
-            evaluate()
-            resetState()
-            } else{ //user wants to use result as an operand, do not reset
-                evaluate()
-                firstOperand = +display.textContent
-                this.style.opacity = '.7'
-                secondOperand = ''
-                display.textContent = ''
-            }
-        } else{ //if we have both operands
-            evaluate()
-            resetState()
-        }
-        currentOperator = this.textContent
-        if (this.textContent == 'x2'){
-            evaluate()
-        }
-    } else if (this.textContent == 'AC'){
-        display.textContent = ''
-        resetState()
+    display.textContent += this.textContent
+    if (this.textContent == 'AC'){
+        clear()
     }
 }))
-function resetState(){
-    firstOperand = ''
-    secondOperand = ''
-    currentOperator = ''
-    resetBtnOpacity()
+function clear(){
+    display.textContent = ''
 }
-function resetBtnOpacity(){
-    btns.forEach((btn) => btn.style.opacity = '1')
-}
-function evaluate(){
-    resetBtnOpacity()
-    switch(currentOperator){
-        case '+':
-            display.textContent = add(firstOperand, secondOperand)
-            break
-        case '-':
-            display.textContent = subtract(firstOperand, secondOperand)
-            break
-        case '*':
-            display.textContent = multiply(firstOperand, secondOperand)
-            break
-        case '/':
-            display.textContent = divide(firstOperand, secondOperand)
-            break
-        case 'x2':
-            display.textContent = square(firstOperand)
-            break
-    }
-}
-function makeNegative(){
-    resetBtnOpacity()
-    if (display.textContent[0] == '-'){
-        display.textContent = display.textContent.slice(1)
-    }else {
-        display.textContent = `-${display.textContent}`
-    }
+function operate(num, num2, operator){
+
 }
 function add(firstNum, secondNum){
     return firstNum + secondNum
