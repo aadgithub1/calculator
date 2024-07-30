@@ -7,8 +7,9 @@ let operator = ''
 btns.forEach((btn) => btn.addEventListener('click', function(){
     if (this.textContent == 'AC'){
         clearDisplay()
+        resetExpression()
     } else if (this.classList.contains('operand')){
-        if (firstOperand && operator && !secondOperand && display.textContent === firstOperand){
+        if (firstOperand && operator && !secondOperand && display.textContent == firstOperand){
             clearDisplay()
         }
         operandPressed(this)
@@ -21,8 +22,11 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
         //+/-
     }
 }))
-//if the user hits equals
+//if
+    //operate
     //display the result
+    //use that result as the first operand
+    //use the button that was pressed as the new operator
 
 function operandPressed(operandBtn){
     if (!operator){
@@ -30,12 +34,14 @@ function operandPressed(operandBtn){
     } else secondOperand += operandBtn.textContent
 }
 function operatorPressed(operatorBtn){
-    
-    if (operatorBtn.textContent === '='){
-        setDisplay(operate(firstOperand, secondOperand, operator))
+
+    if (operatorBtn.textContent === '=' || (firstOperand && secondOperand && operator)){
+        let result = operate(firstOperand, secondOperand, operator)
+        firstOperand = result
+        secondOperand = ''
+        setDisplay(result)
     }
     operator = operatorBtn.textContent
-
 
     // alert(`operand 1: ${firstOperand}, operand 2: ${secondOperand}, operator: ${operator}`)
 }
@@ -45,6 +51,12 @@ function operate(num, num2, currentOperator){
     switch(currentOperator){
         case '+':
             return add(num, num2)
+        case '-':
+            return subtract(num, num2)
+        case '*':
+            return multiply(num, num2)
+        case '/':
+            return divide(num, num2)
     }
 }
 function setDisplay(value){
@@ -70,4 +82,9 @@ function square(number){
 }
 function clearDisplay(){
     display.textContent = ''
+}
+function resetExpression(){
+    firstOperand = ''
+    secondOperand = ''
+    operator = ''
 }
