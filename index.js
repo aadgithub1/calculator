@@ -21,7 +21,8 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
         //+/-
     }
 }))
-//once the user starts again, clear the display
+//if the user hits equals
+    //display the result
 
 function operandPressed(operandBtn){
     if (!operator){
@@ -29,18 +30,32 @@ function operandPressed(operandBtn){
     } else secondOperand += operandBtn.textContent
 }
 function operatorPressed(operatorBtn){
+    
+    if (operatorBtn.textContent === '='){
+        setDisplay(operate(firstOperand, secondOperand, operator))
+    }
     operator = operatorBtn.textContent
-    alert(`operand 1: ${firstOperand}, operand 2: ${secondOperand}, operator: ${operator}`)
-}
-function operate(num, num2, operator){
 
+
+    // alert(`operand 1: ${firstOperand}, operand 2: ${secondOperand}, operator: ${operator}`)
+}
+function operate(num, num2, currentOperator){
+    num = +num
+    num2 = +num2
+    switch(currentOperator){
+        case '+':
+            return add(num, num2)
+    }
+}
+function setDisplay(value){
+    display.textContent = value
 }
 function add(firstNum, secondNum){
     return firstNum + secondNum
 }
 function subtract(firstNum, secondNum){
     return firstNum - secondNum
-}clear
+}
 function multiply(firstNum, secondNum){
     return firstNum * secondNum
 }
