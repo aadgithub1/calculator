@@ -10,8 +10,8 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
         resetExpression()
     } else if (this.textContent === '.' && display.textContent.includes('.')){
         return
-    }else if (this.classList.contains('operand')){
-        if (firstOperand && operator && !secondOperand && display.textContent == firstOperand){
+    } else if (this.classList.contains('operand')){
+        if (firstOperand && operator && !secondOperand && display.textContent == firstOperand){//waiting for secondOperand
             clearDisplay()
         }
         operandPressed(this)
@@ -21,7 +21,7 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
     } else if (this.textContent == 'x2'){
         firstOperand = square(+display.textContent)
         setDisplay(firstOperand)
-    } else{
+    } else{//'+/-'
         let negated = (+display.textContent * -1)
         if (display.textContent == firstOperand){
             firstOperand = negated
@@ -37,7 +37,6 @@ function operandPressed(operandBtn){
     } else secondOperand += operandBtn.textContent
 }
 function operatorPressed(operatorBtn){
-
     if (operatorBtn.textContent === '=' && (!firstOperand || !secondOperand)){
         return
     } else if (operatorBtn.textContent === '=' || (firstOperand && secondOperand && operator)){
@@ -47,22 +46,29 @@ function operatorPressed(operatorBtn){
         setDisplay(result)
     }
     operator = operatorBtn.textContent
-
-    // alert(`operand 1: ${firstOperand}, operand 2: ${secondOperand}, operator: ${operator}`)
 }
 function operate(num, num2, currentOperator){
     num = +num
     num2 = +num2
+    let result = 0
     switch(currentOperator){
         case '+':
-            return add(num, num2)
+            result = add(num, num2)
+            break
         case '-':
-            return subtract(num, num2)
+            result = subtract(num, num2)
+            break
         case '*':
-            return multiply(num, num2)
+            result = multiply(num, num2)
+            break
         case '/':
-            return divide(num, num2)
+            result = divide(num, num2)
+            break
     }
+    if (!Number.isInteger(result)){
+        return result.toFixed(5)
+    }
+    return result
 }
 function setDisplay(value){
     display.textContent = value
@@ -80,7 +86,7 @@ function divide(firstNum, secondNum){
     if (secondNum === 0){
         return 'Mhm sure'
     }
-    return (firstNum / secondNum).toFixed(2)
+    return (firstNum / secondNum)
 }
 function square(number){
     return Math.pow(number, 2)
