@@ -22,12 +22,6 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
         //+/-
     }
 }))
-//if
-    //operate
-    //display the result
-    //use that result as the first operand
-    //use the button that was pressed as the new operator
-
 function operandPressed(operandBtn){
     if (!operator){
         firstOperand += operandBtn.textContent
@@ -35,7 +29,9 @@ function operandPressed(operandBtn){
 }
 function operatorPressed(operatorBtn){
 
-    if (operatorBtn.textContent === '=' || (firstOperand && secondOperand && operator)){
+    if (operatorBtn.textContent === '=' && (!firstOperand || ! secondOperand)){
+        return
+    } else if (operatorBtn.textContent === '=' || (firstOperand && secondOperand && operator)){
         let result = operate(firstOperand, secondOperand, operator)
         firstOperand = result
         secondOperand = ''
