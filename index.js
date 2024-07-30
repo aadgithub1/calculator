@@ -8,7 +8,9 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
     if (this.textContent == 'AC'){
         clearDisplay()
         resetExpression()
-    } else if (this.classList.contains('operand')){
+    } else if (this.textContent === '.' && display.textContent.includes('.')){
+        return
+    }else if (this.classList.contains('operand')){
         if (firstOperand && operator && !secondOperand && display.textContent == firstOperand){
             clearDisplay()
         }
@@ -17,9 +19,16 @@ btns.forEach((btn) => btn.addEventListener('click', function(){
     } else if (this.classList.contains('operator')){
         operatorPressed(this)
     } else if (this.textContent == 'x2'){
-        //do something
+        firstOperand = square(+display.textContent)
+        setDisplay(firstOperand)
     } else{
-        //+/-
+        let negated = (+display.textContent * -1)
+        if (display.textContent == firstOperand){
+            firstOperand = negated
+        } else{
+            secondOperand = negated
+        }
+        setDisplay(negated)
     }
 }))
 function operandPressed(operandBtn){
@@ -29,7 +38,7 @@ function operandPressed(operandBtn){
 }
 function operatorPressed(operatorBtn){
 
-    if (operatorBtn.textContent === '=' && (!firstOperand || ! secondOperand)){
+    if (operatorBtn.textContent === '=' && (!firstOperand || !secondOperand)){
         return
     } else if (operatorBtn.textContent === '=' || (firstOperand && secondOperand && operator)){
         let result = operate(firstOperand, secondOperand, operator)
